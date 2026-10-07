@@ -4,27 +4,34 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const bnDigits = (n) =>
-  String(n).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
+type Category = {
+  id: string;
+  slug: string;
+  nameBn: string;
+  icon: string;
+};
 
-const bnMonths = [
-  "জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন",
-  "জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর",
-];
-const bnDays = [
-  "রবিবার","সোমবার","মঙ্গলবার","বুধবার","বৃহস্পতিবার","শুক্রবার","শনিবার",
+const bnDigits = (n: number | string): string =>
+  String(n).replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)]);
+
+const bnMonths: string[] = [
+  "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর",
 ];
 
-function getBanglaDate() {
+const bnDays: string[] = [
+  "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার",
+];
+
+function getBanglaDate(): string {
   const d = new Date();
   return `${bnDays[d.getDay()]}, ${bnDigits(d.getDate())} ${bnMonths[d.getMonth()]}, ${bnDigits(d.getFullYear())}`;
 }
 
-export default function Navbar({ categories = [] }) {
+export default function Navbar({ categories = [] }: { categories?: Category[] }) {
   const pathname = usePathname();
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<string>("");
 
-  // Set date on client only to avoid hydration mismatch
   useEffect(() => {
     setDate(getBanglaDate());
   }, []);
@@ -62,9 +69,8 @@ export default function Navbar({ categories = [] }) {
       {/* Row 2: Categories */}
       <nav className="border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-2 flex items-center gap-1 overflow-x-auto">
-          {categories.map((cat) => {
-            const isActive =
-              pathname === `/category/${cat.slug}`;
+          {categories.map((cat: Category) => {
+            const isActive = pathname === `/category/${cat.slug}`;
             return (
               <Link
                 key={cat.id}

@@ -7,3 +7,23 @@
 body {
   font-family: var(--font-sans);
 }
+
+/* ==== Ticker marquee ==== */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
