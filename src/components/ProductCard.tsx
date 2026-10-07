@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
             {/* Name */}
             <h3 className="font-semibold text-gray-900 leading-tight">
-                {product.name}
+                {product.nameBn}
             </h3>
 
             {/* Unit */}
@@ -37,18 +37,18 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
 
                 {isUp && (
-                    <span className="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-md">
-                        ▲ {bnDigits(product.changePct)}%
+                    <span className="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-md whitespace-nowrap">
+                        ▲ {bnDigits(product.pct)}%
                     </span>
                 )}
                 {isDown && (
-                    <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md">
-                        ▼ {bnDigits(product.changePct)}%
+                    <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-md whitespace-nowrap">
+                        ▼ {bnDigits(product.pct)}%
                     </span>
                 )}
                 {isFlat && (
-                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-                        — {bnDigits(product.changePct)}%
+                    <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded-md whitespace-nowrap">
+                        — {bnDigits(product.pct)}%
                     </span>
                 )}
             </div>

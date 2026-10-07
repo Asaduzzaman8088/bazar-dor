@@ -17,14 +17,16 @@ async function getProducts(): Promise<Product[]> {
 export default async function HomePage() {
   const products = await getProducts();
 
+  // Top 6 risers: change === "up", sorted by pct descending
   const risers = [...products]
     .filter((p) => p.change === "up")
-    .sort((a, b) => b.changePct - a.changePct)
+    .sort((a, b) => b.pct - a.pct)
     .slice(0, 6);
 
+  // Top 6 fallers: change === "down", sorted by pct ascending (most negative first)
   const fallers = [...products]
     .filter((p) => p.change === "down")
-    .sort((a, b) => a.changePct - b.changePct)
+    .sort((a, b) => a.pct - b.pct)
     .slice(0, 6);
 
   return (
@@ -36,11 +38,15 @@ export default async function HomePage() {
         <h2 className="text-xl font-bold text-red-600 flex items-center gap-2 mb-6">
           <span>▲</span> আজ দাম বেড়েছে
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {risers.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {risers.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {risers.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">কোনো পণ্যের দাম বাড়েনি।</p>
+        )}
       </section>
 
       {/* Section B — Fallers */}
@@ -48,11 +54,15 @@ export default async function HomePage() {
         <h2 className="text-xl font-bold text-green-700 flex items-center gap-2 mb-6">
           <span>▼</span> আজ দাম কমেছে
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {fallers.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {fallers.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {fallers.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">কোনো পণ্যের দাম কমেনি।</p>
+        )}
       </section>
 
       {/* Section C — All Products */}
