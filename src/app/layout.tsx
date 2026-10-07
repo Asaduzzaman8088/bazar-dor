@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import Ticker from "@/components/Ticker";
 import { Category, Product } from "@/lib/utils";
 import "./globals.css";
@@ -53,6 +54,7 @@ export default async function RootLayout({
         <Navbar categories={categories} />
         <Ticker products={tickerProducts} />
         <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
