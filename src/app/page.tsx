@@ -17,15 +17,15 @@ async function getProducts(): Promise<Product[]> {
 export default async function HomePage() {
   const products = await getProducts();
 
-  // Top 6 risers: change === "up", sorted by pct descending
+  // Top 6 risers: dir === "up", sorted by pct descending
   const risers = [...products]
-    .filter((p) => p.change === "up")
+    .filter((p) => p.dir === "up")
     .sort((a, b) => b.pct - a.pct)
     .slice(0, 6);
 
-  // Top 6 fallers: change === "down", sorted by pct ascending (most negative first)
+  // Top 6 fallers: dir === "down", sorted by pct ascending (most negative first)
   const fallers = [...products]
-    .filter((p) => p.change === "down")
+    .filter((p) => p.dir === "down")
     .sort((a, b) => a.pct - b.pct)
     .slice(0, 6);
 

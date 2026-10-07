@@ -12,8 +12,8 @@ export default function Ticker({ products = [] }: { products?: Product[] }) {
         <div className="bg-white border-b border-gray-200 overflow-hidden">
             <div className="ticker-track flex items-center gap-8 py-2 whitespace-nowrap">
                 {doubled.map((p, i) => {
-                    const isUp = p.change === "up";
-                    const isDown = p.change === "down";
+                    const isUp = p.dir === "up";
+                    const isDown = p.dir === "down";
                     return (
                         <Link
                             key={`${p.id}-${i}`}
@@ -22,18 +22,16 @@ export default function Ticker({ products = [] }: { products?: Product[] }) {
                         >
                             <span className="text-base">{p.image}</span>
                             <span className="font-medium">{p.nameBn}</span>
-                            <span className="text-gray-500 text-xs">
-                                {translateUnit(p.unit)}
-                            </span>
+                            <span className="text-gray-500 text-xs">{translateUnit(p.unit)}</span>
                             <span className="font-semibold">{formatPrice(p.today)} টাকা</span>
                             {isUp && (
                                 <span className="text-red-600 text-xs font-medium">
-                                    ▲ {bnDigits(p.pct)}%
+                                    ▲ {bnDigits(Math.abs(p.pct))}%
                                 </span>
                             )}
                             {isDown && (
                                 <span className="text-green-600 text-xs font-medium">
-                                    ▼ {bnDigits(p.pct)}%
+                                    ▼ {bnDigits(Math.abs(p.pct))}%
                                 </span>
                             )}
                         </Link>
