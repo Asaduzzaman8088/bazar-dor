@@ -17,7 +17,7 @@ export default function Ticker({ products = [] }: { products?: Product[] }) {
                     return (
                         <Link
                             key={`${p.id}-${i}`}
-                            href={`/product/${p.slug}`}
+                            href={`/product/${p.id}`}
                             className="flex items-center gap-1.5 text-sm hover:opacity-75"
                         >
                             <span className="text-base">{p.image}</span>
@@ -26,12 +26,12 @@ export default function Ticker({ products = [] }: { products?: Product[] }) {
                             <span className="font-semibold">{formatPrice(p.today)} টাকা</span>
                             {isUp && (
                                 <span className="text-red-600 text-xs font-medium">
-                                    ▲ {bnDigits(Math.abs(p.pct))}%
+                                    ▲ {bnDigits(Math.abs(p.change?.pct ?? 0))}%
                                 </span>
                             )}
                             {isDown && (
                                 <span className="text-green-600 text-xs font-medium">
-                                    ▼ {bnDigits(Math.abs(p.pct))}%
+                                    ▼ {bnDigits(Math.abs(p.change?.pct ?? 0))}%
                                 </span>
                             )}
                         </Link>

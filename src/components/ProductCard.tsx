@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
     return (
         <Link
-            href={`/product/${product.slug}`}
+            href={`/product/${product.id}`}
             className="block bg-white rounded-2xl border border-gray-200 hover:border-green-400 hover:shadow-md transition p-4"
         >
             <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-2xl mb-3">
