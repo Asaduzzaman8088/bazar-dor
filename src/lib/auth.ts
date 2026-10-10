@@ -1,14 +1,14 @@
 import { betterAuth } from "better-auth";
-import { Pool } from "@neondatabase/serverless";
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { MongoClient } from "mongodb";
 
-const BASE = "https://openapi.programming-hero.com/api/bazardor";
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL!,
-});
+const client = new MongoClient(process.env.MONGODB_URI!);
+const db = client.db("bazar_dor");
 
 export const auth = betterAuth({
-    database: pool,
+    database: mongodbAdapter(db, {
+        client, // enables transactions & proper connection management
+    }),
     emailAndPassword: {
         enabled: true,
     },
