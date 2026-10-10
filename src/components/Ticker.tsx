@@ -12,8 +12,8 @@ export default function Ticker({ products = [] }: { products?: Product[] }) {
         <div className="bg-white border-b border-gray-200 overflow-hidden">
             <div className="ticker-track flex items-center gap-8 py-2 whitespace-nowrap">
                 {doubled.map((p, i) => {
-                    const isUp = p.dir === "up";
-                    const isDown = p.dir === "down";
+                    const isUp = p.change?.dir === "up";
+                    const isDown = p.change?.dir === "down";
                     return (
                         <Link
                             key={`${p.id}-${i}`}

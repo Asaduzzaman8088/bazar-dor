@@ -37,8 +37,10 @@ export type Product = {
     yesterday: number;
     lastWeek: number;
     lastMonth: number;
-    dir: "up" | "down" | "flat";     // ⚠️ use dir, not change
-    pct: number;
+    change: {
+        dir: "up" | "down" | "flat";
+        pct: number;
+    };
     markets: Market[];
 };
 
