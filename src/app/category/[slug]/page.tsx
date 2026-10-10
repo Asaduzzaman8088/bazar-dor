@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryClient from "@/components/CategoryClient";
-import { Category, Product } from "@/lib/utils";
+import { Category, Product, bnDigits } from "@/lib/utils";
 
 const BASE = "https://openapi.programming-hero.com/api/bazardor";
 
@@ -65,16 +65,16 @@ export default async function CategoryPage({ params }: PageProps) {
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
-            {/* Header */}
-            <div className="mb-8">
-                <div className="flex items-center gap-3 mb-2">
+            {/* Header Card */}
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
+                <div className="flex items-center gap-3">
                     <span className="text-4xl">{category.icon}</span>
                     <h1 className="text-3xl font-bold text-gray-900">
                         {category.nameBn}
                     </h1>
                 </div>
-                <p className="text-sm text-gray-500">
-                    {products.length}টি পণ্যের আজকের দাম ও পরিবর্তন
+                <p className="text-sm text-gray-500 mt-2 ml-1">
+                    {bnDigits(products.length)}টি পণ্যের আজকের দাম ও পরিবর্তন
                 </p>
             </div>
 

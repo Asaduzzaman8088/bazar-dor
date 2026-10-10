@@ -26,7 +26,7 @@ export default function Hero() {
 
   return (
     <section className="bg-gradient-to-br from-green-50 via-white to-emerald-50">
-      <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
         <div>
           <span className="inline-block text-xs font-medium text-green-800 bg-green-100 px-3 py-1 rounded-full mb-4">
             {date || "\u00A0"}
