@@ -35,6 +35,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     const isUp = product.change?.dir === "up";
     const isDown = product.change?.dir === "down";
     const pct = Math.abs(product.change?.pct ?? 0);
+    const priceDiff = Math.abs(product.today - product.yesterday);
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
@@ -66,6 +67,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
                             <p className="text-xs text-gray-500 mt-1">
                                 গতকালের তুলনায় আজ দাম{" "}
                                 {isUp ? "বেড়েছে" : isDown ? "কমেছে" : "একই আছে"}
+                                {priceDiff > 0 && (
+                                    <> · {bnDigits(priceDiff)} টাকা</>
+                                )}
                             </p>
                         </div>
                     </div>
@@ -91,26 +95,27 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </div>
 
             {/* Price Summary */}
+            {/* Price Summary Section — now with tinted cards */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-4">দামের সারসংক্ষেপ</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-green-50 rounded-xl p-4">
-                        <p className="text-xs text-gray-600 mb-1">সর্বনিম্ন দাম</p>
+                    <div className="bg-green-50 border border-green-100 rounded-xl p-4">
+                        <p className="text-xs text-gray-500 mb-1">সর্বনিম্ন দাম</p>
                         <p className="text-2xl font-bold text-green-700">
                             {bnDigits(overallMin)} টাকা
                         </p>
                         <p className="text-xs text-gray-500 mt-1">সবচেয়ে কম দামের বাজার</p>
                     </div>
-                    <div className="bg-red-50 rounded-xl p-4">
-                        <p className="text-xs text-gray-600 mb-1">সর্বাধিক দাম</p>
+                    <div className="bg-red-50 border border-red-100 rounded-xl p-4">
+                        <p className="text-xs text-gray-500 mb-1">সর্বাধিক দাম</p>
                         <p className="text-2xl font-bold text-red-700">
                             {bnDigits(overallMax)} টাকা
                         </p>
                         <p className="text-xs text-gray-500 mt-1">সবচেয়ে বেশি দামের বাজার</p>
                     </div>
-                    <div className="bg-gray-50 rounded-xl p-4">
-                        <p className="text-xs text-gray-600 mb-1">গড় দাম</p>
-                        <p className="text-2xl font-bold text-gray-800">
+                    <div className="bg-gray-50 border border-gray-100 rounded-xl p-4">
+                        <p className="text-xs text-gray-500 mb-1">গড় দাম</p>
+                        <p className="text-2xl font-bold text-green-700">
                             {bnDigits(overallAvg)} টাকা
                         </p>
                         <p className="text-xs text-gray-500 mt-1">প্রতি {product.unit}-এর হিসাবে</p>
@@ -118,7 +123,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </div>
             </div>
 
-            {/* Bazar Table */}
+            {/* Bazar Table Section — now wrapped in a card */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-4">
                     বাজারভিত্তিক আজকের দাম
@@ -127,27 +132,32 @@ export default async function ProductDetailPage({ params }: PageProps) {
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="text-left text-gray-500 border-b border-gray-200">
-                                <th className="py-3 pr-4 font-medium">বাজার</th>
-                                <th className="py-3 pr-4 font-medium">জেলা</th>
-                                <th className="py-3 pr-4 font-medium text-right">সর্বনিম্ন</th>
-                                <th className="py-3 pr-4 font-medium text-right">সর্বাধিক</th>
-                                <th className="py-3 font-medium text-right">গড়</th>
+                                <th className="py-4 pr-4 font-medium">বাজার</th>
+                                <th className="py-4 pr-4 font-medium">জেলা</th>
+                                <th className="py-4 pr-4 font-medium text-right">সর্বনিম্ন</th>
+                                <th className="py-4 pr-4 font-medium text-right">সর্বাধিক</th>
+                                <th className="py-4 font-medium text-right">গড়</th>
                             </tr>
                         </thead>
                         <tbody>
                             {product.markets.map((m, i) => {
                                 const avg = Math.round((m.min + m.max) / 2);
                                 return (
-                                    <tr key={`${m.market}-${i}`} className="border-b border-gray-100 last:border-0">
-                                        <td className="py-3 pr-4 font-medium text-gray-800">{m.market}</td>
-                                        <td className="py-3 pr-4 text-gray-600">{m.division}</td>
-                                        <td className="py-3 pr-4 text-right text-green-700 font-semibold">
+                                    <tr
+                                        key={`${m.market}-${i}`}
+                                        className="even:bg-gray-50"
+                                    >
+                                        <td className="py-5 pr-4 font-medium text-gray-800">
+                                            {m.market}
+                                        </td>
+                                        <td className="py-5 pr-4 text-gray-600">{m.division}</td>
+                                        <td className="py-5 pr-4 text-right text-green-700 font-semibold">
                                             {bnDigits(m.min)} টাকা
                                         </td>
-                                        <td className="py-3 pr-4 text-right text-red-700 font-semibold">
+                                        <td className="py-5 pr-4 text-right text-red-700 font-semibold">
                                             {bnDigits(m.max)} টাকা
                                         </td>
-                                        <td className="py-3 text-right text-gray-800 font-semibold">
+                                        <td className="py-5 text-right text-gray-800 font-semibold">
                                             {bnDigits(avg)} টাকা
                                         </td>
                                     </tr>
