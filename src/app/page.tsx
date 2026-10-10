@@ -2,11 +2,12 @@ import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import { Product, bnDigits } from "@/lib/utils";
 
-const BASE = "https://api.api-store.workers.dev/api/bazardor";
+
+const BASE = "https://openapi.programming-hero.com/api/bazardor";
 
 async function getProducts(): Promise<Product[]> {
   try {
-    const res = await fetch(`${BASE}/products`, { cache: "no-store" });
+    const res = await fetch(`${BASE}/products`);
     if (!res.ok) return [];
     return (await res.json()) as Product[];
   } catch {
@@ -35,8 +36,8 @@ export default async function HomePage() {
 
       {/* Section A — Risers */}
       <section className="max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-xl font-bold text-red-600 flex items-center gap-2 mb-6">
-          <span>▲</span> আজ দাম বেড়েছে
+        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2 mb-6">
+          <span className="text-red-600">▲</span> আজ দাম বেড়েছে
         </h2>
         {risers.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

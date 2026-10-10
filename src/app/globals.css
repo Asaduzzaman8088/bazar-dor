@@ -8,12 +8,11 @@ body {
   font-family: var(--font-sans);
 }
 
-/* ==== Ticker marquee ==== */
+/* ============ Ticker marquee ============ */
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
-
   to {
     transform: translateX(-50%);
   }
@@ -26,4 +25,15 @@ body {
 
 .ticker-track:hover {
   animation-play-state: paused;
+}
+
+/* ============ Pointer cursor for buttons & links ============ */
+button:not(:disabled),
+[role="button"]:not(:disabled),
+a {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

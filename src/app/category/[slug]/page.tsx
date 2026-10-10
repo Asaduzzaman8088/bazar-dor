@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import CategoryClient from "@/components/CategoryClient";
 import { Category, Product } from "@/lib/utils";
 
-const BASE = "https://api.api-store.workers.dev/api/bazardor";
+const BASE = "https://openapi.programming-hero.com/api/bazardor";
 
 async function getCategory(slug: string): Promise<Category | null> {
     try {
-        const res = await fetch(`${BASE}/categories/${slug}`, { cache: "no-store" });
+        const res = await fetch(`${BASE}/categories/${encodeURIComponent(slug)}`);
         if (!res.ok) return null;
         return (await res.json()) as Category;
     } catch {
@@ -17,9 +17,7 @@ async function getCategory(slug: string): Promise<Category | null> {
 
 async function getProducts(slug: string): Promise<Product[]> {
     try {
-        const res = await fetch(`${BASE}/products?category=${slug}`, {
-            cache: "no-store",
-        });
+        const res = await fetch(`${BASE}/products?category=${encodeURIComponent(slug)}`);
         if (!res.ok) return [];
         return (await res.json()) as Product[];
     } catch {

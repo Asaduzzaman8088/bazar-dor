@@ -2,11 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Product, bnDigits, translateUnit } from "@/lib/utils";
 
-const BASE = "https://api.api-store.workers.dev/api/bazardor";
+const BASE = "https://openapi.programming-hero.com/api/bazardor";
 
 async function getProduct(id: string): Promise<Product | null> {
     try {
-        const res = await fetch(`${BASE}/products/${id}`, { cache: "no-store" });
+        const res = await fetch(`${BASE}/products/${encodeURIComponent(id)}`);
         if (!res.ok) return null;
         return (await res.json()) as Product;
     } catch {

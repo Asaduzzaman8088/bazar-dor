@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Ticker from "@/components/Ticker";
+import Footer from "@/components/Footer";
 import { Category, Product } from "@/lib/utils";
 import "./globals.css";
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     "চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত।",
 };
 
-const BASE = "https://api.api-store.workers.dev/api/bazardor";
+const BASE = "https://openapi.programming-hero.com/api/bazardor";
 
 async function getCategories(): Promise<Category[]> {
   try {
@@ -55,6 +56,18 @@ export default async function RootLayout({
         <Ticker products={tickerProducts} />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3500,
+            style: {
+              fontSize: "14px",
+              fontFamily: "inherit",
+            },
+            success: { iconTheme: { primary: "#16a34a", secondary: "#fff" } },
+            error: { iconTheme: { primary: "#dc2626", secondary: "#fff" } },
+          }}
+        />
       </body>
     </html>
   );

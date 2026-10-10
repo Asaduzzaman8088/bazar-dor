@@ -40,12 +40,14 @@ export default function Navbar({ categories = [] }: { categories?: Category[] })
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
       {/* Row 1: Logo + Auth */}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center text-white text-xl">
-            🛒
-          </div>
+        <Link href="/" className="flex items-center gap-3">
+          <img
+            src="/Stack.svg"
+            alt="বাজার দর"
+            className="w-11 h-11 shrink-0"
+          />
           <div className="leading-tight">
-            <h1 className="text-lg font-bold text-green-700">বাজার দর</h1>
+            <h1 className="text-lg font-bold text-gray-900">বাজার দর</h1>
             <p className="text-[11px] text-gray-500">{date || "\u00A0"}</p>
           </div>
         </Link>
