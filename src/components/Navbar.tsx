@@ -63,6 +63,13 @@ export default function Navbar({ categories = [] }: { categories?: Category[] })
           >
             সাইন আপ
           </Link>
+          {/* TEMP: Profile link for testing - remove after auth */}
+          <Link
+            href="/profile"
+            className="text-sm font-medium text-gray-700 hover:text-green-700"
+          >
+            প্রোফাইল
+          </Link>
         </div>
       </div>
 
@@ -75,11 +82,10 @@ export default function Navbar({ categories = [] }: { categories?: Category[] })
               <Link
                 key={cat.id}
                 href={`/category/${cat.slug}`}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition ${
-                  isActive
-                    ? "bg-green-600 text-white"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition ${isActive
+                  ? "bg-green-600 text-white"
+                  : "text-gray-700 hover:bg-gray-100"
+                  }`}
               >
                 <span>{cat.icon}</span>
                 <span>{cat.nameBn}</span>
