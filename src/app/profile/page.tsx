@@ -3,31 +3,23 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function ProfilePage() {
     const router = useRouter();
-    const [loading, setLoading] = useState(true);
+    const { data: session, isPending } = useSession();
     const [updating, setUpdating] = useState(false);
     const [name, setName] = useState("");
-    const [user, setUser] = useState<{
-        name: string;
-        email: string;
-        image?: string;
-    } | null>(null);
 
-    // TODO: Replace with real session fetch after BetterAuth is wired up
+    // Sync name input when session loads
     useEffect(() => {
-        // Temporary fake session for UI testing
-        // Remove this after auth is set up!
-        setTimeout(() => {
-            setUser({
-                name: "Rezwan Ahmed",
-                email: "rezwanahmed@gmail.com",
-            });
-            setName("Rezwan Ahmed");
-            setLoading(false);
-        }, 500);
-    }, []);
+        if (session?.user?.name) {
+            setName(session.user.name);
+        }
+    }, [session]);
+
+    const user = session?.user;
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,17 +27,18 @@ export default function ProfilePage() {
         // TODO: Wire to BetterAuth updateUser later
         setTimeout(() => {
             setUpdating(false);
-            alert("Update will work after BetterAuth is wired!");
+            toast.success("আপডেট শীঘ্রই কাজ করবে!");
         }, 800);
     };
 
     const handleSignOut = async () => {
-        // TODO: Wire to BetterAuth signOut later
-        alert("Sign out will work after BetterAuth is wired!");
+        await signOut();
         router.push("/");
+        router.refresh();
     };
 
-    if (loading) {
+    // Loading state
+    if (isPending) {
         return (
             <div className="max-w-2xl mx-auto px-4 py-12">
                 <div className="animate-pulse space-y-4">
@@ -58,6 +51,7 @@ export default function ProfilePage() {
         );
     }
 
+    // Not logged in
     if (!user) {
         return (
             <div className="max-w-2xl mx-auto px-4 py-16 text-center">
@@ -93,13 +87,27 @@ export default function ProfilePage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-2xl font-bold text-green-700">
-                            {user.name.charAt(0).toUpperCase()}
+                        {/* ✅ Real avatar from Google/GitHub OR fallback initial */}
+                        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center overflow-hidden shrink-0">
+                            {user.image ? (
+                                <img
+                                    src={user.image}
+                                    alt={user.name ?? "User"}
+                                    className="w-full h-full object-cover"
+                                    referrerPolicy="no-referrer"
+                                />
+                            ) : (
+                                <span className="text-green-700 font-bold text-2xl">
+                                    {user.name?.charAt(0).toUpperCase() ?? "U"}
+                                </span>
+                            )}
                         </div>
                         <div>
+                            {/* ✅ Real name */}
                             <h2 className="text-lg font-bold text-gray-900">
-                                {user.name}
+                                {user.name || "ব্যবহারকারী"}
                             </h2>
+                            {/* ✅ Real email */}
                             <p className="text-sm text-gray-500">{user.email}</p>
                         </div>
                     </div>
@@ -143,8 +151,8 @@ export default function ProfilePage() {
                     </div>
                     <button
                         type="submit"
-                        disabled={updating || name === user.name}
-                        className="w-full bg-green-700 hover:bg-green-800 disabled:bg-green-400 text-white font-medium py-2.5 rounded-lg transition"
+                        disabled={updating}
+                        className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium py-2.5 rounded-lg transition"
                     >
                         {updating ? "আপডেট হচ্ছে..." : "আপডেট"}
                     </button>
