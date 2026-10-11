@@ -25,34 +25,53 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-green-50 via-white to-emerald-50">
-      <div className="max-w-6xl mx-auto px-4 py-6 md:py-10 grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-        <div>
-          <span className="inline-block text-xs font-medium text-green-800 bg-green-100 px-3 py-1 rounded-full mb-4">
-            {date || "\u00A0"}
-          </span>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-900 leading-tight max-w-3xl">
-            আজকের বাজারের দাম এক নজরে
-          </h1>
-          <p className="mt-4 text-gray-600 leading-relaxed max-w-2xl">
-            চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
-            বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
-          </p>
-          <a
-            href="#সব-পণ্য"
-            className="inline-block mt-6 bg-green-700 hover:bg-green-800 text-white font-medium px-6 py-3 rounded-lg transition"
-          >
-            সব পণ্য দেখুন
-          </a>
-        </div>
+    <section className="max-w-6xl mx-auto px-4 pt-6 pb-4">
+      {/* ✅ The card wrapper */}
+      <div className="bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-2xl border border-gray-200 shadow-sm p-8 md:p-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+          {/* LEFT — Text content */}
+          <div>
+            <span className="inline-block text-sm font-semibold text-green-800 bg-green-100 px-4 py-1.5 rounded-full mb-6">
+              {date || "\u00A0"}
+            </span>
 
-        {/* Right — Illustration */}
-        <div className="flex justify-center md:justify-end">
-          <img
-            src="/basket.svg"
-            alt="বাজারের ঝুড়ি"
-            className="w-[220px] md:w-[320px] lg:w-[380px] h-auto"
-          />
+            <h1 className="text-4xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+              আজকের বাজারের দাম এক নজরে
+            </h1>
+
+            <p className="mt-5 text-base md:text-lg text-gray-600 leading-relaxed">
+              চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
+              বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
+            </p>
+
+            <a
+              href="#সব-পণ্য"
+              className="inline-block mt-8 bg-green-700 hover:bg-green-800 text-white font-semibold px-8 py-3.5 rounded-lg transition"
+            >
+              সব পণ্য দেখুন
+            </a>
+          </div>
+
+          {/* RIGHT — Basket illustration */}
+          <div className="flex justify-center md:justify-end">
+            <img
+              src="/basket.svg"
+              alt="বাজারের ঝুড়ি"
+              className="w-full max-w-[280px] md:max-w-[380px] h-auto"
+              onError={(e) => {
+                const target = e.currentTarget;
+                target.style.display = "none";
+                const fallback = target.nextElementSibling as HTMLElement;
+                if (fallback) fallback.style.display = "block";
+              }}
+            />
+            <div
+              className="hidden text-[180px] md:text-[260px] leading-none select-none"
+              aria-hidden="true"
+            >
+              🧺
+            </div>
+          </div>
         </div>
       </div>
     </section>

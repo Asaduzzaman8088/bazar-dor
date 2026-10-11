@@ -8,7 +8,7 @@
 
 ## 🔗 Live Demo
 
-- **Live URL:** [bazar-dor-six-kappa.vercel.app](https://bazar-dor-six-kappa.vercel.app)
+- **Live URL:** [bazar-dor-six-kappa.vercel.app](https://bazar-dor-plum-two.vercel.app)
 - **GitHub Repo:** [github.com/Asaduzzaman8088/bazar-dor](https://github.com/Asaduzzaman8088/bazar-dor)
 
 ---
