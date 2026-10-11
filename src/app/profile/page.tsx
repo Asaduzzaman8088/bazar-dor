@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -9,27 +9,13 @@ import { useSession, signOut } from "@/lib/auth-client";
 export default function ProfilePage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
-    const [updating, setUpdating] = useState(false);
-    const [name, setName] = useState("");
-
-    // Sync name input when session loads
-    useEffect(() => {
-        if (session?.user?.name) {
-            setName(session.user.name);
-        }
-    }, [session]);
-
     const user = session?.user;
 
-    const handleUpdate = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setUpdating(true);
-        // TODO: Wire to BetterAuth updateUser later
-        setTimeout(() => {
-            setUpdating(false);
-            toast.success("আপডেট শীঘ্রই কাজ করবে!");
-        }, 800);
-    };
+    useEffect(() => {
+        if (!isPending && !user) {
+            router.push("/sign-in");
+        }
+    }, [isPending, user, router]);
 
     const handleSignOut = async () => {
         try {
@@ -43,7 +29,7 @@ export default function ProfilePage() {
         }
     };
 
-    // Loading state
+    // Loading
     if (isPending) {
         return (
             <div className="max-w-2xl mx-auto px-4 py-12">
@@ -93,7 +79,6 @@ export default function ProfilePage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        {/* ✅ Real avatar from Google/GitHub OR fallback initial */}
                         <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center overflow-hidden shrink-0">
                             {user.image ? (
                                 <img
@@ -109,11 +94,9 @@ export default function ProfilePage() {
                             )}
                         </div>
                         <div>
-                            {/* ✅ Real name */}
                             <h2 className="text-lg font-bold text-gray-900">
                                 {user.name || "ব্যবহারকারী"}
                             </h2>
-                            {/* ✅ Real email */}
                             <p className="text-sm text-gray-500">{user.email}</p>
                         </div>
                     </div>
@@ -139,30 +122,18 @@ export default function ProfilePage() {
                 </div>
             </div>
 
-            {/* Update Info Form */}
+            {/* ✅ তথ্য section — now links to /profile/update */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-6">তথ্য</h3>
-                <form onSubmit={handleUpdate} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                            নাম
-                        </label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600 text-gray-900"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        disabled={updating}
-                        className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-medium py-2.5 rounded-lg transition"
-                    >
-                        {updating ? "আপডেট হচ্ছে..." : "আপডেট"}
-                    </button>
-                </form>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">তথ্য</h3>
+                <p className="text-sm text-gray-500 mb-5">
+                    আপনার নাম পরিবর্তন করতে নিচের বাটনে ক্লিক করুন
+                </p>
+                <Link
+                    href="/profile/update"
+                    className="inline-block bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2.5 rounded-lg transition"
+                >
+                    তথ্য আপডেট করুন
+                </Link>
             </div>
         </div>
     );

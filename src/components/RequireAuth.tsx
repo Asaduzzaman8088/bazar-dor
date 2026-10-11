@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 export default function RequireAuth({
     children,
@@ -14,6 +15,7 @@ export default function RequireAuth({
 
     useEffect(() => {
         if (!isPending && !session) {
+            toast.error("এই পেজ দেখতে সাইন ইন করুন");
             router.push("/sign-in");
         }
     }, [isPending, session, router]);
