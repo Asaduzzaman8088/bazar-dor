@@ -25,9 +25,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 pt-6 pb-4">
+    <section className="max-w-6xl mx-auto px-4 pt-2 pb-1">
       {/* ✅ The card wrapper */}
-      <div className="bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-2xl border border-gray-200 shadow-sm p-8 md:p-12">
+      <div className="bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-2xl border border-gray-200 shadow-sm p-4 md:p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
           {/* LEFT — Text content */}
           <div>
