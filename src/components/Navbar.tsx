@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useSession, signOut } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+
 
 /* ============ Bangla helpers ============ */
 
@@ -60,10 +62,16 @@ export default function Navbar({ categories = [] }: { categories?: Category[] })
   }, [menuOpen]);
 
   const handleSignOut = async () => {
-    await signOut();
-    setMenuOpen(false);
-    router.push("/");
-    router.refresh();
+    try {
+      await signOut();
+      toast.success("সফলভাবে সাইন আউট হয়েছেন");   // ← success toast
+      setMenuOpen(false);
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Sign-out error:", error);
+      toast.error("সাইন আউট ব্যর্থ হয়েছে");         // ← error toast
+    }
   };
 
   const user = session?.user;
@@ -203,8 +211,8 @@ export default function Navbar({ categories = [] }: { categories?: Category[] })
                 key={cat.id}
                 href={`/category/${cat.slug}`}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-[15px] whitespace-nowrap transition ${isActive
-                    ? "bg-green-600 text-white"
-                    : "text-gray-700 hover:bg-gray-100"
+                  ? "bg-green-600 text-white"
+                  : "text-gray-700 hover:bg-gray-100"
                   }`}
               >
                 <span>{cat.icon}</span>

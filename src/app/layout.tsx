@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Category, Product } from "@/lib/utils";
 import "./globals.css";
 
+
 const hindSiliguri = Hind_Siliguri({
   variable: "--font-hind-siliguri",
   subsets: ["bengali", "latin"],

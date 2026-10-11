@@ -30,12 +30,12 @@ export default function SignInPage() {
       console.error("Sign-in error:", authError);
       const errMsg = authError.message || "সাইন ইন ব্যর্থ হয়েছে";
       setError(errMsg);
-      toast.error(errMsg);
+      toast.error(errMsg);          // ← error toast
       setLoading(false);
       return;
     }
 
-    toast.success("সফলভাবে সাইন ইন করেছেন!");
+    toast.success("সফলভাবে সাইন ইন করেছেন!");   // ← success toast
     router.push("/");
     router.refresh();
   };

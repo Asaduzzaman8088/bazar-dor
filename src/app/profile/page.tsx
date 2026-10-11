@@ -32,9 +32,15 @@ export default function ProfilePage() {
     };
 
     const handleSignOut = async () => {
-        await signOut();
-        router.push("/");
-        router.refresh();
+        try {
+            await signOut();
+            toast.success("সফলভাবে সাইন আউট হয়েছেন");
+            router.push("/");
+            router.refresh();
+        } catch (error) {
+            console.error("Sign-out error:", error);
+            toast.error("সাইন আউট ব্যর্থ হয়েছে");
+        }
     };
 
     // Loading state
